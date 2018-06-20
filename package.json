@@ -1,14 +1,20 @@
 {
     "name": "cscs-repl",
-    "displayName": "cscs-repl",
+    "displayName": "CSCS REPL",
     "description": "CSCS (Customized Scripting in C#) REPL Evaluator",
-    "version": "0.0.1",
+    "version": "0.1.1",
     "publisher": "vassilik",
+    "author": {
+        "name": "Vassili Kaplan", "email": "vassilik@gmail.com"
+    },
     "engines": {
         "vscode": "^1.24.0"
     },
     "categories": [
-        "Other"
+        "Programming Languages", "Other"
+    ],
+    "keywords": [
+        "CSCS", "repl", "scripting", "C#", "interactive"
     ],
     "activationEvents": [
         "onCommand:extension.cscs.repl"
