@@ -1,65 +1,67 @@
-# replcscs README
+# CSCS REPL Extension for Visual Studio Code
 
-This is the README for your extension "replcscs". After writing up a brief description, we recommend including the following sections.
+A [Visual Studio Code](https://code.visualstudio.com/) [extension](https://marketplace.visualstudio.com/VSCode) with rich support for CSCS (Customized Scripting in C#). The CSCS scripting language has been described in [CODE Magazine](http://www.codemag.com/Article/1607081), [MSDN Magazine](https://msdn.microsoft.com/en-us/magazine/mt632273.aspx), and in [this Syncfusion E-book](https://www.syncfusion.com/resources/techportal/details/ebooks/implementing-a-custom-language).
 
-## Features
+The main advantage of the CSCS scripting language is the possibility to easily modify the language functionality or to add new functions. Everything is open sourced (see [Windows/Mac Version](https://github.com/vassilych/cscs) and [Mobile Development Version](https://github.com/vassilych/mobile)) and is absolutely free to use.
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+You can also use CSCS for cross-platform mobile develpment with Xamarin. See
+[CODE Magazine](http://www.codemag.com/article/1711081) and [MSDN Magazine](https://msdn.microsoft.com/en-us/magazine/mt829272). Stay tuned for a Syncfusion E-book "Native Mobile Apps in a Functional Scripting Language Succinctly" coming up in Summer 2018.
 
-For example if there is an image subfolder under your extension project workspace:
+This extention contains the CSCS syntax highlighting and supports [REPL](https://en.wikipedia.org/wiki/Read–eval–print_loop) (Read-Eval-Print Loop). Basically you just select ayn CSCS code and click
 
-\!\[feature X\]\(images/feature-x.png\)
+## Quick start
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+### Windows/Mac/VS Extensions
 
-## Requirements
+* **Step 1.** Download the CSCS parser [Windows/Mac Version](https://github.com/vassilych/cscs).
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+* **Step 2.** Open the project downloaded in the first step Visual Studio Code and compile it.
 
-## Extension Settings
+* **Step 3.** Start the DebugServer either from Visual Studio Code or from the command-line. The default port is 13337.
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+* **Step 4.** Open any CSCS file in Visual Studio Code and start selecting code fragments and pressing Cmd+9 (Ctrl+9) (see the animated gif below).
 
-For example:
+### Mobile Development/Unity Extension
 
-This extension contributes the following settings:
+* **Step 1.** Download the CSCS parser [Mobile Development Version](https://github.com/vassilych/mobile).
 
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
+* **Step 2.** Open the project downloaded in the first step Visual Studio and compile it.
 
-## Known Issues
+* **Step 3.** Start the DebugServer either from Visual Studio or from the command-line. The default port is 13337.
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+* **Step 4.** Open any CSCS file in Visual Studio Code and start selecting code fragments and pressing Cmd+9 (Ctrl+9) (see the animated gif below).
 
-## Release Notes
+## Questions, issues, feature requests, and contributions
 
-Users appreciate release notes as you update your extension.
+* If you have a question about how to accomplish something with the extension or come across a problem with the extension, please [ask me](http://www.ilanguage.ch/p/contact.html)
 
-### 1.0.0
+## Extension Features
 
-Initial release of ...
+* Select some text and press Cmd+9 (macOS) or Ctrl+9 (Windows and Linux)
+* For debugiing CSCS files and more features use [CSCS Debugger](https://marketplace.visualstudio.com/items?itemName=vassilik.cscs-debugger)
 
-### 1.0.1
+![General Features](https://raw.githubusercontent.com/vassilych/cscs-repl/master/images/repl_cscs.gif)
 
-Fixed issue #.
+The corresponding `launch.json` configuration looks like this:
 
-### 1.1.0
+```json
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "cscs",
+            "request": "launch",
+            "name": "CSCS Debugger",
+            "program": "${workspaceFolder}/${command:AskForProgramName}",
+            "stopOnEntry": true,
+            "connectType": "sockets",
+            "serverPort": 13337,
+            "serverHost": "127.0.0.1"
+        }
+    ]
+}
+```
 
-Added features X, Y, and Z.
+## Data and Privacy
 
------------------------------------------------------------------------------------------------------------
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+The CSCS Extension for Visual Studio Code DOES NOT collect any data from the user.
