@@ -1,7 +1,7 @@
 {
-    "name": "replcscs",
-    "displayName": "replCSCS",
-    "description": "The REPL protocol for the CSCS Debugging",
+    "name": "cscs-repl",
+    "displayName": "cscs-repl",
+    "description": "CSCS (Customized Scripting in C#) REPL Evaluator",
     "version": "0.0.1",
     "publisher": "vassilik",
     "engines": {
@@ -11,22 +11,63 @@
         "Other"
     ],
     "activationEvents": [
-        "*"
+        "onCommand:extension.cscs.repl"
     ],
+	"icon": "images/cscs128.png",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/vassilych/cscs-repl.git"
+	},
+	"license": "MIT",
     "main": "./out/extension",
     "contributes": {
-        "commands": [
-            {
-                "command": "extension.cscs.sendToREPL",
-                "title": "Send to REPL"
-            }
-        ],
+        "commands": [{
+            "command": "extension.cscs.repl",
+            "title": "CSCS REPL"
+        }],
         "keybindings": [{
-            "command": "extension.cscs.sendToREPL",
+            "command": "extension.cscs.repl",
             "key": "ctrl+9",
-            "mac": "cmd+'¨",
+            "mac": "cmd+9",
             "when": "editorTextFocus"
         }],
+        "configuration": {
+            "type": "object",
+            "title": "CSCS REPL configuration",
+            "properties": {
+                "cscs.connectType": {
+                    "type": "string",
+                    "default": "sockets",
+                    "description": "How to connect to the CSCS running host"
+                },
+                "cscs.serverPort": {
+                    "type": "number",
+                    "default": 13337,
+                    "description": "The port number of the CSCS running host"
+                },
+                "cscs.serverHost": {
+                    "type": "string",
+                    "default": "127.0.0.1",
+                    "description": "The server name the CSCS running host"
+                }
+            }
+        },
+        "languages": [{
+			"id": "cscs",
+			"aliases": [
+				"CSCS",
+				"cscs"
+			],
+			"extensions": [
+				".cscs"
+			],
+			"configuration": "./language-configuration.json"
+		}],
+		"grammars": [{
+            "language": "cscs",
+            "scopeName": "source.cscs",
+            "path": "./syntaxes/cs.tmLanguage"
+        }]
     },
     "scripts": {
         "vscode:prepublish": "npm run compile",
