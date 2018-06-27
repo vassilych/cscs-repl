@@ -20,7 +20,7 @@ This extention contains the CSCS syntax highlighting and supports [REPL](https:/
 * The results of running the selected code will be shown in the new Output window "CSCS"
 * For debugging CSCS files and more features use [CSCS Debugger](https://marketplace.visualstudio.com/items?itemName=vassilik.cscs-debugger)
 
-## Quick start
+## Quick Start
 
 ### Windows/Mac/VS Extensions
 
@@ -42,9 +42,11 @@ This extention contains the CSCS syntax highlighting and supports [REPL](https:/
 
 * **Step 4.** Open any CSCS file in Visual Studio Code and start selecting code fragments and pressing Cmd+9 (Ctrl+9) (see the animated gifs below).
 
-## Questions, issues, feature requests, and contributions
+## Questions, Issues, and Feature Requests
 
 * If you have a question about how to accomplish something with the extension or come across a problem with the extension, please [ask me](http://www.ilanguage.ch/p/contact.html)
+
+## CSCS REPL in Action
 
 * Here is the REPL with an iOS device. You can see that you can add and remove widgets on the fly.
 
