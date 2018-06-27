@@ -2,29 +2,35 @@
     "name": "cscs-repl",
     "displayName": "CSCS REPL",
     "description": "CSCS (Customized Scripting in C#) REPL Evaluator",
-    "version": "0.1.1",
+    "version": "0.1.3",
     "publisher": "vassilik",
     "author": {
-        "name": "Vassili Kaplan", "email": "vassilik@gmail.com"
+        "name": "Vassili Kaplan",
+        "email": "vassilik@gmail.com"
     },
     "engines": {
         "vscode": "^1.24.0"
     },
     "categories": [
-        "Programming Languages", "Other"
+        "Programming Languages",
+        "Other"
     ],
     "keywords": [
-        "CSCS", "repl", "scripting", "C#", "interactive"
+        "CSCS",
+        "repl",
+        "scripting",
+        "interpreter",
+        "C#"
     ],
     "activationEvents": [
         "onCommand:extension.cscs.repl"
     ],
-	"icon": "images/cscs128.png",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/vassilych/cscs-repl.git"
-	},
-	"license": "MIT",
+    "icon": "images/cscs128.png",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/vassilych/cscs-repl.git"
+    },
+    "license": "MIT",
     "main": "./out/extension",
     "contributes": {
         "commands": [{
@@ -59,17 +65,16 @@
             }
         },
         "languages": [{
-			"id": "cscs",
-			"aliases": [
-				"CSCS",
-				"cscs"
-			],
-			"extensions": [
-				".cscs"
-			],
-			"configuration": "./language-configuration.json"
-		}],
-		"grammars": [{
+            "id": "cscs",
+            "aliases": [
+                "CSCS", "cscs"
+            ],
+            "extensions": [
+                ".cscs", ".mqs"
+            ],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
             "language": "cscs",
             "scopeName": "source.cscs",
             "path": "./syntaxes/cs.tmLanguage"
