@@ -3,6 +3,10 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 import { CscsRepl } from './cscsRepl';
+//import { SignalRConfiguration, SignalR } from 'ng2-signalr';
+//import { SignalRModule, SignalRConnection } from 'ng2-signalr';
+//import { Resolve, Route } from '@angular/router';
+//import { Injectable } from '@angular/core';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -23,7 +27,17 @@ export function activate(context: vscode.ExtensionContext) {
 
     let outputChannel = vscode.window.createOutputChannel('CSCS');
 
-    cscsRepl.on('onMessage', (data : string) => {
+    cscsRepl.on('onInfoMessage', (msg : string) => {
+        vscode.window.showInformationMessage('REPL: ' + msg);
+    });
+    cscsRepl.on('onWarningMessage', (msg : string) => {
+        vscode.window.showWarningMessage('REPL: ' + msg);
+    });
+    cscsRepl.on('onErrorMessage', (msg : string) => {
+        vscode.window.showErrorMessage('REPL: ' + msg);
+    });
+
+    cscsRepl.on('onReplMessage', (data : string) => {
         outputChannel.append('REPL> ');
         let lines = data.toString().split('\n');
         let counter = 0;
@@ -38,7 +52,6 @@ export function activate(context: vscode.ExtensionContext) {
         if (counter === 0) {
             outputChannel.appendLine("");
         }
-        //vscode.window.showInformationMessage('REPL> ' + msg);
     });
 
     const getCode = () => {
@@ -66,6 +79,12 @@ export function activate(context: vscode.ExtensionContext) {
     });
     context.subscriptions.push(disposable);
 }
+/*const config = new SignalRConfiguration();
+config.hubName = 'Ng2SignalRHub';
+config.qs = { user: 'donald' };
+config.url = 'http://ng2-signalr-backend.azurewebsites.net/';
+
+let _signalR: SignalR;*/
 
 // this method is called when your extension is deactivated
 export function deactivate() {

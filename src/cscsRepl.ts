@@ -60,7 +60,8 @@ export class CscsRepl extends EventEmitter {
 
 			this._debugger.connect(this._port, this._host, () => {
 				this._connected = true;
-				console.log('Connected!');
+				this.printInfoMsg('Connected to the server at ' + this._host + ":" + this._port);
+				this.printInfoMsg('Check out the results in the Output CSCS Window');
 
 				for (let i = 0; i < this._queuedCommands.length; i++) {
 					this.sendToServer(this._queuedCommands[i]);
@@ -73,8 +74,12 @@ export class CscsRepl extends EventEmitter {
 			});
 
 			this._debugger.on('close', () => {
+				if (!this._connected) { 
+					this.printErrorMsg("Couldn't connect to " + this._host + ":" + this._port);
+				} else {
+					this.printWarningMsg('Connection closed');
+				}
 				this._connected = false;
-				console.info('Connection closed');
 			});
 		}
 	}
@@ -109,13 +114,20 @@ export class CscsRepl extends EventEmitter {
 	public printDebugMsg(msg : string) {
 		//console.info('    _' + msg);		
 	}
-	public printCSCSOutput(msg : string, file = "", line = -1) {
-		//console.error('CSCS> ' + msg + ' \r\n');
-		//console.error();
-		this.sendEvent('onMessage', msg);
+	public printInfoMsg(msg : string) {
+		this.sendEvent('onInfoMessage', msg);
+	}
+	public printWarningMsg(msg : string) {
+		this.sendEvent('onWarningMessage', msg);
+	}
+	public printErrorMsg(msg : string) {
+		this.sendEvent('onErrorMessage', msg);
+	}
+	public printReplOutput(msg : string, file = "", line = -1) {
+		this.sendEvent('onReplMessage', msg);
 	}
 	protected processFromDebugger(data : string) {
-		this.printCSCSOutput(data);
+		this.printReplOutput(data);
 	}
 
 	protected disconnectFromDebugger() {
