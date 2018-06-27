@@ -46,7 +46,11 @@ This extention contains the CSCS syntax highlighting and supports [REPL](https:/
 
 * If you have a question about how to accomplish something with the extension or come across a problem with the extension, please [ask me](http://www.ilanguage.ch/p/contact.html)
 
+* Here is the REPL with an iOS device. You can see that you can add and remove widgets on the fly.
+
 ![General Features](https://raw.githubusercontent.com/vassilych/cscs-repl/master/images/repl_ios_cscs.gif)
+
+* Here is the REPL with a normal CSCS script.
 
 ![General Features](https://raw.githubusercontent.com/vassilych/cscs-repl/master/images/repl_cscs.gif)
 
