@@ -9,14 +9,6 @@ import { EventEmitter } from 'events';
 //import { OutputChannel, window } from 'vscode';
 
 const Net  = require("net");
-//const Path = require('path');
-
-export interface StackEntry {
-	id: number;
-	line: number;
-	name: string;
-	file: string;
-}
 
 export class CscsRepl extends EventEmitter {
 
@@ -25,9 +17,9 @@ export class CscsRepl extends EventEmitter {
 	private _host        = "127.0.0.1";
 	private _port        = 13337;
 
-	private _connected    = false;
-	private _finished     = false;
-	private _init         = false;
+	private _connected   = false;
+	//private _finished    = false;
+	private _init        = true;
 
 	private _queuedCommands = new Array<string>();
 
@@ -38,14 +30,12 @@ export class CscsRepl extends EventEmitter {
 
 	constructor() {
 		super();
-		//this._debugSession = debugSession;
 	}
 
 	public start(connectType: string, host: string, port: number) {
-		if (this._init) {
+		if (this._connected) {
 			return;
 		}
-		this._init = true;
 		this._connectType = connectType;
 		this._host = host;
 		this._port = port;
@@ -59,9 +49,12 @@ export class CscsRepl extends EventEmitter {
 			console.log('Connecting to ' + this._port + " on  " + this._host + "...");
 
 			this._debugger.connect(this._port, this._host, () => {
+				if (this._init) {
+					this.printInfoMsg('Connected to the server at ' + this._host + ":" + this._port);
+					this.printInfoMsg('Check out the results in the Output CSCS Window');
+				}
 				this._connected = true;
-				this.printInfoMsg('Connected to the server at ' + this._host + ":" + this._port);
-				this.printInfoMsg('Check out the results in the Output CSCS Window');
+				this._init = false;
 
 				for (let i = 0; i < this._queuedCommands.length; i++) {
 					this.sendToServer(this._queuedCommands[i]);
@@ -84,26 +77,24 @@ export class CscsRepl extends EventEmitter {
 		}
 	}
 	public sendToServer(cmd : string, data = "") {
-		if (this._finished) {
-			return;
-		}
+		//if (this._finished) {
+		//	return;
+		//}
 		let lines = data.split('\n');
 		let load = "";
 		for (let i = 0; i < lines.length; i++) {
-		  let lineData = lines[i].trim();
-		  let lines2 = lineData.split('\r');
-		  if (lineData === "") {
-			  continue;
-		  }
-		  load = load + lines2[0];
+			let lineData = lines[i].trim();
+			if (lineData === "") {
+				continue;
+			}
+			let lines2 = lineData.split('\r');
+		  	load = load + lines2[0];
 		}
-		//data = data.replace('\n', ' ');
-		//data = data.replace('\r', ' ');
-		//data = data.trim();
 		if (load !== "" || !cmd.includes('|')) {
 			cmd = cmd + "|" + load;
 		}
 		if (!this._connected) {
+			this.connectToDebugger();
 			this.printDebugMsg('No connection. Queueing [' + cmd + '] when connected.');
 			this._queuedCommands.push(cmd);
 			return;
@@ -123,18 +114,17 @@ export class CscsRepl extends EventEmitter {
 	public printErrorMsg(msg : string) {
 		this.sendEvent('onErrorMessage', msg);
 	}
-	public printReplOutput(msg : string, file = "", line = -1) {
+	protected processFromDebugger(msg : string) {
 		this.sendEvent('onReplMessage', msg);
-	}
-	protected processFromDebugger(data : string) {
-		this.printReplOutput(data);
+		//this.disconnectFromDebugger();
 	}
 
 	protected disconnectFromDebugger() {
+		this.sendToServer('bye');
 		console.error('Finished debugging');
 		this._connected = false;
-		this._finished = true;
-		this._debugger.destroy();
+		//this._finished = true;
+		this._debugger.end();
 	}
 
 	private sendEvent(event: string, ... args: any[]) {
