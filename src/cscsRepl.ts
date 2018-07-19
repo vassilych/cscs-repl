@@ -67,10 +67,10 @@ export class CscsRepl extends EventEmitter {
 			});
 
 			this._debugger.on('close', () => {
-				if (!this._connected) { 
+				if (this._init) { // Never connected
 					this.printErrorMsg("Couldn't connect to " + this._host + ":" + this._port);
 				} else {
-					this.printWarningMsg('Connection closed');
+					//this.printWarningMsg('Connection closed');
 				}
 				this._connected = false;
 			});
@@ -120,7 +120,7 @@ export class CscsRepl extends EventEmitter {
 	}
 
 	protected disconnectFromDebugger() {
-		this.sendToServer('bye');
+		//this.sendToServer('bye');
 		console.error('Finished debugging');
 		this._connected = false;
 		//this._finished = true;
