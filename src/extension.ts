@@ -61,7 +61,6 @@ export function activate(context: vscode.ExtensionContext) {
         }
         let selection = textEditor.selection;
         let text = textEditor.document.getText(selection);
-        //return text;
         if (textEditor.selection.start.line === textEditor.selection.end.line &&
             textEditor.selection.start.character === textEditor.selection.end.character) {
             text = textEditor.document.lineAt(textEditor.selection.start.line).text;
@@ -70,7 +69,6 @@ export function activate(context: vscode.ExtensionContext) {
     };
 
     let disposable = vscode.commands.registerCommand('extension.cscs.repl', () => {
-        // The code you place here will be executed every time your command is executed
         let code = getCode();
         if (code === '') {
             return;

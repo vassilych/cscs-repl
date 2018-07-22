@@ -18,7 +18,7 @@ export class CscsRepl extends EventEmitter {
 	private _port        = 13337;
 
 	private _connected   = false;
-	//private _finished    = false;
+	private _finished    = false;
 	private _init        = true;
 
 	private _queuedCommands = new Array<string>();
@@ -77,9 +77,7 @@ export class CscsRepl extends EventEmitter {
 		}
 	}
 	public sendToServer(cmd : string, data = "") {
-		//if (this._finished) {
-		//	return;
-		//}
+		this._finished = false;
 		let lines = data.split('\n');
 		let load = "";
 		for (let i = 0; i < lines.length; i++) {
@@ -115,15 +113,18 @@ export class CscsRepl extends EventEmitter {
 		this.sendEvent('onErrorMessage', msg);
 	}
 	protected processFromDebugger(msg : string) {
-		this.sendEvent('onReplMessage', msg);
+		if (this._finished) {
+			return;
+		}
+		this._finished = true;
 		//this.disconnectFromDebugger();
+		this.sendEvent('onReplMessage', msg);
 	}
 
 	protected disconnectFromDebugger() {
-		//this.sendToServer('bye');
-		console.error('Finished debugging');
 		this._connected = false;
-		//this._finished = true;
+		//this.sendToServer('bye');
+		console.error('Finished REPL');
 		this._debugger.end();
 	}
 
