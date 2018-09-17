@@ -39,13 +39,16 @@ export function activate(context: vscode.ExtensionContext) {
 
     cscsRepl.on('onReplMessage', (data : string) => {
         outputChannel.append('REPL> ');
-        let lines = data.toString().split('\n');
+        let lines = data.split('\\n');
+        if (lines.length === 1) {
+            lines = data.split('\n');
+        }
         let counter = 0;
         for (let i = 0; i < lines.length; i++) {
             let line = lines[i].trim();
-            if (line === "") {
-                continue;
-            }
+            //if (line === "") {
+            //    continue;
+            //}
             outputChannel.appendLine(line);
             counter++;
         }
