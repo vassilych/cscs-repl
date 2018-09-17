@@ -2,7 +2,7 @@
     "name": "cscs-repl",
     "displayName": "CSCS REPL",
     "description": "CSCS (Customized Scripting in C#) REPL Evaluator",
-    "version": "0.1.3",
+    "version": "0.1.9",
     "publisher": "vassilik",
     "author": {
         "name": "Vassili Kaplan",
@@ -33,6 +33,17 @@
     "license": "MIT",
     "main": "./out/extension",
     "contributes": {
+        "languages": [{
+            "id":            "cscs",
+            "aliases":      ["CSCS", "cscs"],
+            "extensions":   [".cscs", ".mqs"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "cscs",
+            "scopeName": "source.cscs",
+            "path": "./syntaxes/cscs.tmLanguage"
+        }],
         "commands": [{
             "command": "extension.cscs.repl",
             "title": "CSCS REPL"
@@ -63,22 +74,7 @@
                     "description": "The server name the CSCS running host"
                 }
             }
-        },
-        "languages": [{
-            "id": "cscs",
-            "aliases": [
-                "CSCS", "cscs"
-            ],
-            "extensions": [
-                ".cscs", ".mqs"
-            ],
-            "configuration": "./language-configuration.json"
-        }],
-        "grammars": [{
-            "language": "cscs",
-            "scopeName": "source.cscs",
-            "path": "./syntaxes/cs.tmLanguage"
-        }]
+        }
     },
     "scripts": {
         "vscode:prepublish": "npm run compile",
